@@ -109,6 +109,9 @@ public class IabHelper {
     // Public key for verifying signature, in base64 encoding
     String mSignatureBase64 = null;
 
+    // Vendor's package id
+    String vendorPackage = null;
+
     // Billing response codes
     public static final int BILLING_RESPONSE_RESULT_OK = 0;
     public static final int BILLING_RESPONSE_RESULT_USER_CANCELED = 1;
@@ -206,6 +209,8 @@ public class IabHelper {
      * @param listener The listener to notify when the setup process is complete.
      */
     public void startSetup(String vendorIntent, String vendorPackage, final OnIabSetupFinishedListener listener) {
+        this.vendorPackage = vendorPackage;
+        
         // If already set up, can't do it again.
         checkNotDisposed();
         if (mSetupDone) throw new IllegalStateException("IAB helper is already set up.");
@@ -268,11 +273,19 @@ public class IabHelper {
         };
 
         Intent serviceIntent = new Intent(vendorIntent);
-        serviceIntent.setPackage(vendorPackage);
         
+        if (vendorPackage == "net.jhoobin.jhub") {
+            serviceIntent.setPackage(null);
+        } else {
+            serviceIntent.setPackage(vendorPackage);
+        }
+
         PackageManager pm=mContext.getPackageManager();
         List<ResolveInfo> intentServices = pm.queryIntentServices(serviceIntent, 0);
         if (intentServices != null && !intentServices.isEmpty()) {
+            if (vendorPackage == "net.jhoobin.jhub") {
+                serviceIntent.setPackage(intentServices.get(0).serviceInfo.packageName);
+            }
             // service available to handle that Intent
             mContext.bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
         }
@@ -398,7 +411,10 @@ public class IabHelper {
             String packageName = mContext.getPackageName();
 
             Bundle configBundle = mService.getPurchaseConfig(apiVersion);
-            if (configBundle.getBoolean(INTENT_V2_SUPPORT)) {
+
+            Boolean vendorV2Support = (this.vendorPackage != "net.jhoobin.jhub");
+
+            if (vendorV2Support && configBundle.getBoolean(INTENT_V2_SUPPORT)) {
                 logDebug("launchBuyIntentV2 for " + sku + ", item type: " + itemType);
                 launchBuyIntentV2(act, sku, itemType, requestCode, listener, extraData);
             } else {

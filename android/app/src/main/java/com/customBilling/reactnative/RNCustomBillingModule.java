@@ -91,6 +91,10 @@ public class RNCustomBillingModule extends ReactContextBaseJavaModule implements
                 VENDOR_INTENT = "ir.tgbs.iranapps.billing.InAppBillingService.BIND";
                 VENDOR_PACKAGE = "ir.tgbs.android.iranapp";
                 break;
+            case "charkhoneh":
+                VENDOR_INTENT = "net.jhoobin.jhub.InAppBillingService.BIND";
+                VENDOR_PACKAGE = "net.jhoobin.jhub";
+                break;
             default:
                 break;
         }
