@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.util;
+package com.customBilling.reactnative.util;
 
 import android.text.TextUtils;
 import android.util.Log;

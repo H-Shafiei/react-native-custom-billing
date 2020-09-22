@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.util;
+package com.customBilling.reactnative.util;
 
 /**
  * Represents the result of an in-app billing operation.

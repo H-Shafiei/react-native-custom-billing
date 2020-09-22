@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.util;
+package com.customBilling.reactnative.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

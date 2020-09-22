@@ -27,10 +27,10 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.ActivityEventListener;
 
-import com.util.IabHelper;
-import com.util.IabResult;
-import com.util.Inventory;
-import com.util.Purchase;
+import com.customBilling.reactnative.util.IabHelper;
+import com.customBilling.reactnative.util.IabResult;
+import com.customBilling.reactnative.util.Inventory;
+import com.customBilling.reactnative.util.Purchase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
